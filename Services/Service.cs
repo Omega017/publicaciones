@@ -84,10 +84,17 @@ namespace Publicaciones.Service {
             return BackendContext.Personas.ToList();
         }
 
-//        public List<Publicacion> Publicaciones (string rut) {
-//            return BackendContext.Publicaciones
-//                .Where
-//        }
+        public List<Publicacion> Publicaciones (string rut) {
+            List < Autor > autores = BackendContext.Autores
+                .Where(a => a.Persona.Rut.Contains(rut))
+                .ToList();
+            List < Publicacion > publicacionesAutor = new List< Publicacion >();
+            foreach (Autor autor in autores)
+            {
+                publicacionesAutor.Add(autor.Publicacion);
+            }
+            return publicacionesAutor;
+        }
 
 
         public void Initialize() {
