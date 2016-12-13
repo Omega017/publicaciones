@@ -4,5 +4,7 @@ namespace Publicaciones.Models
     {
         public string Id { get; set; }
         public Persona persona { get; set; }
+
+        public Publicacion publicacion { get; set; }
     }
 }
