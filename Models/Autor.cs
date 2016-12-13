@@ -1,9 +1,8 @@
 namespace Publicaciones.Models
 {
-    public class Publicacion
+    public class Autor
     {
         public string Id { get; set; }
-        public Autor autor { get; set; }
-
+        public Persona persona { get; set; }
     }
 }

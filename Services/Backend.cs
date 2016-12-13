@@ -24,14 +24,21 @@ namespace Publicaciones.Backend {
         /// <summary>
         /// Representacion de las Personas del Backend
         /// </summary>
-        /// <returns>Link a la BD de Personas</returns>
+        /// <returns> Link a la BD de Personas</returns>
         public DbSet < Persona > Personas { get; set; }
 
         /// <summary>
         /// Representacion de las Publicaciones del Backend
         /// </summary>
-        /// <return>Link a la BD de las Publicaciones</return>
+        /// <return> Link a la BD de las Publicaciones</return>
         public DbSet < Publicacion > Publicaciones { get; set; }
+         
+         /// <summary>
+         /// Representacion de los autores del Backend
+         /// </summary>
+         /// <return> Link de la BD de los Autores </return>
+        public DbSet < Autor > Autores { get; set; }
+
 
     }
 

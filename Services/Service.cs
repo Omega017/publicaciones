@@ -84,10 +84,10 @@ namespace Publicaciones.Service {
             return BackendContext.Personas.ToList();
         }
 
-        public List<Publicacion> Publicaciones (string rut) {
-            return BackendContext.Publicaciones
-                .Where
-        }
+//        public List<Publicacion> Publicaciones (string rut) {
+//            return BackendContext.Publicaciones
+//                .Where
+//        }
 
 
         public void Initialize() {
