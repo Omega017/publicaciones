@@ -45,6 +45,7 @@ namespace Publicaciones.Service {
             Logger.LogInformation("Initialize Test ok.");
         }
 
+
         [Fact]
         public void InitializeTest()
         {
@@ -67,9 +68,26 @@ namespace Publicaciones.Service {
             foreach(Persona persona in personas) {
                 Logger.LogInformation("Persona: {0}", persona);
             }
+            {
+                //Testing metodo Publicaciones
+                //Logger.LogInformation("Testing: Probando Metodo Publicaciones");
+                //Persona persona = personas.First();
+                //TestPublicacionesAutor(persona.Rut);
+            }
+            
 
             Logger.LogInformation("Test IMainService.Initialize() ok");
         }
+
+
+        [Theory,InlineData("123456789")]
+        public void TestPublicacionesAutor(string rut){
+
+            List <Publicacion> publicacionesPorAutor = Service.Publicaciones(rut);
+            Assert.NotNull(publicacionesPorAutor.First());
+            Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().Id);
+        }
+        
 
         void IDisposable.Dispose()
         {

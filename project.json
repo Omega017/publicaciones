@@ -47,7 +47,10 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "copyToOutput": {
+      "include": ["xunit.runner.json"]
+    }
   },
 
   "runtimeOptions": {

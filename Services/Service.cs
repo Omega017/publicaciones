@@ -13,9 +13,15 @@ namespace Publicaciones.Service {
     public interface IMainService {
         void Add(Persona persona); 
 
+        void Add(Publicacion pub);
+
+        void Add(Autor author);
+
         List < Persona > FindPersonas(string nombre);
 
         List <Persona> Personas();
+
+        List <Publicacion> Publicaciones (String rut);
 
         void Initialize(); 
     }
@@ -64,6 +70,10 @@ namespace Publicaciones.Service {
             Logger.LogInformation("MainService created"); 
         }
 
+        /// <summary>
+        /// Agregar persona al backend
+        /// </summary>
+        /// <param name="persona"></param>
         public void Add(Persona persona) {
 
             // Guardo la Persona en el Backend
@@ -71,6 +81,28 @@ namespace Publicaciones.Service {
 
             // Guardo los cambios
             BackendContext.SaveChanges(); 
+        }
+
+        /// <summary>
+        /// Agregar publicacion al backend
+        /// </summary>
+        /// <param name="publi"></param>
+        public void Add(Publicacion publi){
+            // Guardo la publicacion en el Backend
+            BackendContext.Publicaciones.Add(publi);
+            // Guardar cambios
+            BackendContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Agregar autor al backend
+        /// </summary>
+        /// <param name="author"></param>
+        public void Add(Autor author){
+            // Guardo la publicacion en el Backend
+            BackendContext.Autores.Add(author);
+            // Guardar cambios
+            BackendContext.SaveChanges();
         }
 
         public List < Persona > FindPersonas(string nombre) {
@@ -106,11 +138,28 @@ namespace Publicaciones.Service {
             Logger.LogDebug("Realizando Inicializacion .."); 
             // Persona por defecto
             Persona persona = new Persona(); 
+            persona.Rut = "123456789";
             persona.Nombre = "Diego"; 
             persona.Apellido = "Urrutia"; 
 
             // Agrego la persona al backend
             this.Add(persona); 
+
+            // Creo la primera publicacion
+            Publicacion pub = new Publicacion();
+            pub.Id = "1";
+
+            // Agrego la publicacion al backend
+            this.Add(pub);
+
+            // Creo primer autor
+            Autor autor = new Autor();
+            autor.Id = "1";
+            autor.Persona = persona;
+            autor.Publicacion = pub;
+
+            // Agrego el autor al backend
+            this.Add(autor);            
 
             foreach (Persona p in BackendContext.Personas) {
                 Logger.LogDebug("Persona: {0}", p); 
