@@ -4,5 +4,6 @@ namespace Publicaciones.Models
     {
         public string Id { get; set; }
 
+        public int PagInicio { get; set; }
     }
 }

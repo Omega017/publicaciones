@@ -80,13 +80,26 @@ namespace Publicaciones.Service {
                 .ToList(); 
         }
 
+        public Persona FindPersonasByRut(string rut) {
+            return BackendContext.Personas
+                .Where(p => p.Rut.Equals(rut)).Single();
+        }
+
+        public List < Autor > FindAutoresByRut(string rut) {
+            return BackendContext.Autores
+                .Where(a => a.Persona.Rut == rut)
+                .OrderBy(a => a.Persona.Nombre)
+                .ToList();
+        }
+
+
         public List<Persona> Personas() {
             return BackendContext.Personas.ToList();
         }
 
         public List<Publicacion> Publicaciones (string rut) {
             List < Autor > autores = BackendContext.Autores
-                .Where(a => a.Persona.Rut.Contains(rut))
+                .Where(a => a.Persona.Rut == rut)
                 .ToList();
             List < Publicacion > publicacionesAutor = new List< Publicacion >();
             foreach (Autor autor in autores)
@@ -108,9 +121,48 @@ namespace Publicaciones.Service {
             Persona persona = new Persona(); 
             persona.Nombre = "Diego"; 
             persona.Apellido = "Urrutia"; 
+            string rut = "1";
+            persona.Rut = rut;
 
             // Agrego la persona al backend
             this.Add(persona); 
+
+            // *** Borrar, es solo una prueba
+            // ****
+            Persona pp = FindPersonasByRut(persona.Rut);
+            Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
+
+            Publicacion publicacion = new Publicacion();
+            publicacion.PagInicio = 1;
+            BackendContext.Publicaciones.Add(publicacion); 
+            BackendContext.SaveChanges();
+
+            Publicacion publicacion2 = new Publicacion();
+            publicacion2.PagInicio = 15;
+            BackendContext.Publicaciones.Add(publicacion2); 
+            BackendContext.SaveChanges();
+
+            Autor autor = new Autor();
+            autor.Persona = persona;
+            autor.Publicacion = publicacion;
+            BackendContext.Autores.Add(autor);
+            BackendContext.SaveChanges();
+
+            Autor autor2 = new Autor();
+            autor2.Persona = persona;
+            autor2.Publicacion = publicacion2;
+            BackendContext.Autores.Add(autor2);
+            BackendContext.SaveChanges();
+
+            Logger.LogWarning("Yo soy un autor: " + FindAutoresByRut(persona.Rut).ElementAt(0).Persona.Nombre);
+            Logger.LogWarning("Publicaciones pagina de Diego: " + Publicaciones(persona.Rut).ElementAt(0).PagInicio);
+            Logger.LogWarning("Publicaciones pagina de Diego: " + Publicaciones(persona.Rut).ElementAt(1).PagInicio);            
+
+            //List < Publicacion > lp = Publicaciones(persona.Rut);
+            //Logger.LogWarning("Esta es la pagina de inicio de una publicacion de Diego: " + lp.ElementAt(0).PagInicio);
+            // ****
+            // ***
+
 
             foreach (Persona p in BackendContext.Personas) {
                 Logger.LogDebug("Persona: {0}", p); 
@@ -118,7 +170,7 @@ namespace Publicaciones.Service {
 
             Initialized = true;
 
-            Logger.LogDebug("Inicializacion terminada :)");
+            Logger.LogDebug("Inicializacion terminada :')");
         }
     }
 
