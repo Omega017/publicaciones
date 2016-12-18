@@ -85,7 +85,7 @@ namespace Publicaciones.Service {
 
             List <Publicacion> publicacionesPorAutor = Service.Publicaciones(rut);
             Assert.NotNull(publicacionesPorAutor.First());
-            Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().Id);
+            Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().PublicacionId);
         }
         
 
