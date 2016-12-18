@@ -119,7 +119,7 @@ namespace Publicaciones.Service {
 
         public List < Autor > FindAutoresByRut(string rut) {
             return BackendContext.Autores
-                .Where(a => a.Persona.Rut == rut)
+                .Where(a => a.Rut.Contains(rut))
                 .OrderBy(a => a.Persona.Nombre)
                 .ToList();
         }
@@ -131,7 +131,7 @@ namespace Publicaciones.Service {
 
         public List<Publicacion> Publicaciones (string rut) {
             List < Autor > autores = BackendContext.Autores
-                .Where(a => a.Persona.Rut == rut)
+                .Where(a => a.Rut.Contains(rut))
                 .ToList();
             List < Publicacion > publicacionesAutor = new List< Publicacion >();
             foreach (Autor autor in autores)
