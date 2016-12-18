@@ -1,9 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Publicaciones.Models
 {
     public class Persona
     {
-        public string Id { get; set; }
-
+        [Key]
         public string Rut { get; set; }
 
         public string Email { get; set; }
