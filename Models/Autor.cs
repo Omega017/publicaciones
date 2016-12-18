@@ -2,10 +2,12 @@ namespace Publicaciones.Models
 {
     public class Autor
     {
-        public string Id { get; set; }
+        public string AutorId { get; set; }
 
+        public string Rut { get; set; }
         public virtual Persona Persona { get; set; }
 
+        public string PublicacionId { get; set; }
         public virtual Publicacion Publicacion { get; set; }
     }
 }
