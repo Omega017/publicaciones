@@ -166,7 +166,7 @@ namespace Publicaciones.Service {
 
             // *** Borrar, es solo una prueba
             // ****
-            Persona pp = FindPersonasByRut(persona.Rut);
+            Persona pp = FindPersonaByRut(persona.Rut);
             Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
 
             Revista r = new Revista();
