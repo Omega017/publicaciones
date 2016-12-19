@@ -154,8 +154,8 @@ namespace Publicaciones.Service {
             persona.Rut = "123456789";
             persona.Nombre = "Diego"; 
             persona.Apellido = "Urrutia"; 
-            string rut = "1";
-            persona.Rut = rut;
+            string rut = "123456789";
+            //persona.Rut = rut;
 
             // Agrego la persona al backend
             this.Add(persona); 
@@ -163,25 +163,38 @@ namespace Publicaciones.Service {
 
             // *** Borrar, es solo una prueba
             // ****
-            Persona pp = FindPersonasByRut(persona.Rut);
-            Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
+            //Persona pp = FindPersonasByRut(persona.Rut);
+            Persona pp = FindPersonasByRut(rut);
+            Logger.LogWarning("Este es el nombre de la persona: " + pp.Nombre );
+            Logger.LogWarning("Este es el apellido de la persona: " + pp.Apellido );
+            Logger.LogWarning("Este es el rut de la persona: " + pp.Rut );
 
             Publicacion publicacion = new Publicacion();
+            //pagina de inicio de la publicacion
             publicacion.PagInicio = 1;
+            //id de la publicacion
+            publicacion.PublicacionId="Publicacion001";
+            Logger.LogWarning("Este es la id de la publicacion: " + publicacion.PublicacionId );
             BackendContext.Publicaciones.Add(publicacion); 
             BackendContext.SaveChanges();
 
             Publicacion publicacion2 = new Publicacion();
+            //pagina de inicio de la publicacion
             publicacion2.PagInicio = 15;
+            //id de la publicacion
+            publicacion2.PublicacionId="Publicacion002";
+            Logger.LogWarning("Este es la id de la publicacion: " + publicacion2.PublicacionId );
             BackendContext.Publicaciones.Add(publicacion2); 
             BackendContext.SaveChanges();
 
+            //autor de la primera publicacion
             Autor autor = new Autor();
             autor.Persona = persona;
             autor.Publicacion = publicacion;
             BackendContext.Autores.Add(autor);
             BackendContext.SaveChanges();
 
+            //autor de la segunda publicacion (el mismo)
             Autor autor2 = new Autor();
             autor2.Persona = persona;
             autor2.Publicacion = publicacion2;
