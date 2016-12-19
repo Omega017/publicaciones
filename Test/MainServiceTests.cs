@@ -80,14 +80,54 @@ namespace Publicaciones.Service {
         }
 
 
-        [Theory,InlineData("123456789")]
+       [Theory,InlineData("1")]
         public void TestPublicacionesAutor(string rut){
-
+            Logger.LogInformation("Iniciando TestPublicacionesAutor...");
+            Service.Initialize();
             List <Publicacion> publicacionesPorAutor = Service.Publicaciones(rut);
             Assert.NotNull(publicacionesPorAutor.First());
             Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().PublicacionId);
         }
-        
+
+        [Fact]
+        public void TestPublicacionesAutor(){
+            Logger.LogInformation("Iniciando TestPublicacionesAutor");
+            // Persona por defecto
+            Persona persona = new Persona(); 
+            persona.Rut = "123456789";
+            persona.Nombre = "Diego"; 
+            persona.Apellido = "Urrutia"; 
+            string rut = "1";
+            persona.Rut = rut;
+            // Agrego la persona al backend
+            Service.Add(persona);
+            Persona pp = Service.FindPersonaByRut(persona.Rut);
+            Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
+
+            Publicacion publicacion = new Publicacion();
+            publicacion.PagInicio = 1;
+            
+            /*Backend.Publicaciones.Add(publicacion); 
+            BackendContext.SaveChanges();
+
+            Publicacion publicacion2 = new Publicacion();
+            publicacion2.PagInicio = 15;
+            BackendContext.Publicaciones.Add(publicacion2); 
+            BackendContext.SaveChanges();
+
+            Autor autor = new Autor();
+            autor.Persona = persona;
+            autor.Publicacion = publicacion;
+            BackendContext.Autores.Add(autor);
+            BackendContext.SaveChanges();
+
+            Autor autor2 = new Autor();
+            autor2.Persona = persona;
+            autor2.Publicacion = publicacion2;
+            BackendContext.Autores.Add(autor2);
+            BackendContext.SaveChanges();*/
+            
+        }
 
         void IDisposable.Dispose()
         {
