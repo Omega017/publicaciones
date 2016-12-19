@@ -83,9 +83,24 @@ namespace Publicaciones.Service {
         [Theory,InlineData("123456789")]
         public void TestPublicacionesAutor(string rut){
 
+            Logger.LogInformation("Testing IMainService.Publicaciones(string rut) ..");
+            //inicializacion
+            Service.Initialize();
+
+            //publicaciones en la BD
             List <Publicacion> publicacionesPorAutor = Service.Publicaciones(rut);
+            
+            //existe el autor por ese rut
             Assert.NotNull(publicacionesPorAutor.First());
-            Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().PublicacionId);
+
+            //para cada una de las publicaciones del autor
+            foreach(Publicacion publicacion in publicacionesPorAutor){
+                Logger.LogInformation("Testing Metodo Publicaciones id de la publicacion: " + publicacion.PublicacionId);
+            }
+            
+            //Logger.LogInformation("Testing Metodo Publicaciones id de la 1era publicacion: " + publicacionesPorAutor.First().PublicacionId);
+
+            Logger.LogInformation("Test IMainService.Publicaciones(string rut) ok");
         }
         
 
