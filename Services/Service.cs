@@ -1,5 +1,6 @@
 using System; 
 using System.Collections.Generic; 
+using Microsoft.EntityFrameworkCore;
 using System.Linq; 
 using Microsoft.Extensions.Logging; 
 using Publicaciones.Backend; 
@@ -18,6 +19,8 @@ namespace Publicaciones.Service {
         void Add(Autor author);
 
         List < Persona > FindPersonas(string nombre);
+
+        Persona FindPersonaByRut(string rut);
 
         List <Persona> Personas();
 
@@ -112,7 +115,7 @@ namespace Publicaciones.Service {
                 .ToList(); 
         }
 
-        public Persona FindPersonasByRut(string rut) {
+        public Persona FindPersonaByRut(string rut) {
             return BackendContext.Personas
                 .Where(p => p.Rut.Equals(rut)).Single();
         }
@@ -166,10 +169,41 @@ namespace Publicaciones.Service {
             Persona pp = FindPersonasByRut(persona.Rut);
             Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
 
+            Revista r = new Revista();
+            r.Issn = "NN";
+            r.Nombre = "la revista de tomas";
+            BackendContext.Revistas.Add(r);
+            BackendContext.SaveChanges();
+            Logger.LogWarning("ID de la revista de tomas: " + BackendContext.Revistas.Where(ra => ra.Issn == r.Issn).Single().RevistaId);
+
+            Paper pap = new Paper();
+            pap.Titulo = "Las serias consecuencias de no entender a las mujeres";
+            pap.Abstract = "Algun resumen estupido";
+            pap.LineaInvestigativa = "La creencia del absurdo";
+            pap.FechaInicio = new DateTime(1994, 11, 15);
+            pap.FechaTermino = new DateTime(2015, 12, 11);
+            BackendContext.Papers.Add(pap);
+
+
             Publicacion publicacion = new Publicacion();
             publicacion.PagInicio = 1;
+            publicacion.FechaRevista = new DateTime(2016, 12, 12);
+            publicacion.Revista = r;
+            publicacion.Papers = new List < Paper >();
+            publicacion.Papers.Add(pap);
             BackendContext.Publicaciones.Add(publicacion); 
             BackendContext.SaveChanges();
+
+            Logger.LogWarning("Titulo Publicacion de Pag 1: " + BackendContext.Publicaciones
+                .Include(p => p.Papers)
+                .ToList()
+                .ElementAt(0).Papers.ElementAt(0).Titulo);
+
+            Logger.LogWarning("Pagina de Publicacion de Paper de las creencias absurdas " + BackendContext.Papers
+                .Include(ppe => ppe.Publicacion)
+                .ToList()
+                .ElementAt(0).Publicacion.PagInicio);
+
 
             Publicacion publicacion2 = new Publicacion();
             publicacion2.PagInicio = 15;
