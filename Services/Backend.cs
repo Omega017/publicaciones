@@ -39,6 +39,15 @@ namespace Publicaciones.Backend {
          /// <return> Link de la BD de los Autores </return>
         public DbSet < Autor > Autores { get; set; }
 
+        public DbSet < Revista > Revistas { get; set; }
+
+        public DbSet < Indice > Indices { get; set; }
+
+        public DbSet < Impacto > Impactos { get; set; }
+
+        public DbSet < Paper > Papers { get; set; }
+
+
 
     }
 
