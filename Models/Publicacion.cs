@@ -11,6 +11,8 @@ namespace Publicaciones.Models
         public string RevistaId { get; set; }
         public virtual Revista Revista { get; set; }
 
+        public virtual List < Autor > Autor { get; set; }
+
         public DateTime FechaWeb { get; set; }
 
         public int PagInicio { get; set; }
