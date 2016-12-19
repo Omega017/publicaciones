@@ -12,6 +12,8 @@ namespace Publicaciones.Models
 
         public string LineaInvestigativa { get; set; }
 
+        public string AreaDesarrollo { get; set; }
+
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaTermino { get; set; }
