@@ -15,6 +15,7 @@ namespace Publicaciones.Service {
     {
         IMainService Service { get; set; }
 
+
         ILogger Logger { get; set; }
 
         public MainServiceTest()
@@ -79,8 +80,46 @@ namespace Publicaciones.Service {
             Logger.LogInformation("Test IMainService.Initialize() ok");
         }
 
+        [Fact]
+        public void FindPersonaByRutTest()
+        {
+            Logger.LogInformation("Testing IMainService.FindPersonaByRut(string rut); ..");
+            Service.Initialize();
+            
+            // Test Person.
+            Persona persona = new Persona();
+            persona.Nombre = "Alfredo";
+            persona.Apellido = "Henriquez";
+            persona.Email = "alfred@sodired.com";
+            persona.Rut = "17725104-6";
 
-       [Theory,InlineData("1")]
+            // Person added to bd.
+            Service.Add(persona);
+
+            // Getting person from bd.
+            Persona backPersona = Service.FindPersonaByRut(persona.Rut);
+
+            // Existence validation.
+            Assert.NotNull(backPersona);
+
+            // Parameter validation
+            Assert.True(persona.Rut == backPersona.Rut);
+            Assert.True(persona.Nombre == backPersona.Nombre);
+            Assert.True(persona.Apellido == backPersona.Apellido);
+            Assert.True(persona.Rut == backPersona.Rut);
+
+            // non-existence validation.
+            Assert.Null(Service.FindPersonaByRut("18508182-6"));
+
+            // Invalid parameter validation
+            Assert.Throws<System.ArgumentException>( () => { Service.FindPersonaByRut("11222333-1"); });     
+
+            Logger.LogInformation("Test IMainService.FindPersonaByRut(string rut); OK");
+            
+        }
+
+        /*
+        [Theory,InlineData("1")]
         public void TestPublicacionesAutor(string rut){
             Logger.LogInformation("Iniciando TestPublicacionesAutor...");
             Service.Initialize();
@@ -88,46 +127,7 @@ namespace Publicaciones.Service {
             Assert.NotNull(publicacionesPorAutor.First());
             Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().PublicacionId);
         }
-
-        [Fact]
-        public void TestPublicacionesAutor(){
-            Logger.LogInformation("Iniciando TestPublicacionesAutor");
-            // Persona por defecto
-            Persona persona = new Persona(); 
-            persona.Rut = "123456789";
-            persona.Nombre = "Diego"; 
-            persona.Apellido = "Urrutia"; 
-            string rut = "1";
-            persona.Rut = rut;
-            // Agrego la persona al backend
-            Service.Add(persona);
-            Persona pp = Service.FindPersonaByRut(persona.Rut);
-            Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
-
-            Publicacion publicacion = new Publicacion();
-            publicacion.PagInicio = 1;
-            
-            /*Backend.Publicaciones.Add(publicacion); 
-            BackendContext.SaveChanges();
-
-            Publicacion publicacion2 = new Publicacion();
-            publicacion2.PagInicio = 15;
-            BackendContext.Publicaciones.Add(publicacion2); 
-            BackendContext.SaveChanges();
-
-            Autor autor = new Autor();
-            autor.Persona = persona;
-            autor.Publicacion = publicacion;
-            BackendContext.Autores.Add(autor);
-            BackendContext.SaveChanges();
-
-            Autor autor2 = new Autor();
-            autor2.Persona = persona;
-            autor2.Publicacion = publicacion2;
-            BackendContext.Autores.Add(autor2);
-            BackendContext.SaveChanges();*/
-            
-        }
+        */
 
         void IDisposable.Dispose()
         {
