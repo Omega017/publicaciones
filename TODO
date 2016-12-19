@@ -1,2 +1,3 @@
 ADD: Agregar validaciones a los metodos
-ADD: Navigation references on model classes
+MOD: Alfredo: I have to finish the documentation in Service.cs
+ASK: Preguntarle al profe la validación de parametros en los metodos

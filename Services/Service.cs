@@ -10,21 +10,53 @@ using Utilities.Validations;
 namespace Publicaciones.Service {
 
     /// <summary>
-    /// Metodos de la interface
+    /// Interface that names the methods that the MainService implements like AOP 
     /// </summary>
     public interface IMainService {
+
+        /// <summary>
+        /// This methods add a person to the backend
+        /// </summary>
+        /// <param name="persona"></param>
         void Add(Persona persona); 
 
+        /// <summary>
+        /// This methods add a publication to the backend
+        /// </summary>
+        /// <param name="pub"></param>
         void Add(Publicacion pub);
 
+        /// <summary>
+        /// This methods add an author to the backend
+        /// </summary>
+        /// <param name="author"></param>
         void Add(Autor author);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <returns></returns>
         List < Persona > FindPersonas(string nombre);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rut"></param>
+        /// <returns></returns>
         Persona FindPersonaByRut(string rut);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         List <Persona> Personas();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rut"></param>
+        /// <returns></returns>
         List <Publicacion> Publicaciones (String rut);
 
         void Initialize(); 
