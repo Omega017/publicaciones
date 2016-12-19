@@ -5,7 +5,7 @@ namespace Publicaciones.Models
      {
          public string ImpactoId { get; set; }
 
-         public string Q { get; set; }
+         public Q Q { get; set; }
 
          public string Jif { get; set; }
 
@@ -17,4 +17,6 @@ namespace Publicaciones.Models
          public string IndiceId { get; set; }
          public virtual Indice Indice { get; set; }
      }
+
+     public enum Q { Q1, Q2, Q3, Q4 };
 }     
