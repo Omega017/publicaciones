@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Logging; 
 using Publicaciones.Backend; 
 using Publicaciones.Models; 
+using Utilities.Validations;
 
 namespace Publicaciones.Service {
 
@@ -115,9 +116,17 @@ namespace Publicaciones.Service {
                 .ToList(); 
         }
 
+        /// <summary>
+        /// Find persons by rut.
+        /// </summary>
+        /// <param name="rut">Without dots, with verification number and dash e.g. 11502391-5</param>
+        /// <returns></returns>
         public Persona FindPersonaByRut(string rut) {
+            if(!ModelValidations.isValidRut(rut)) {
+                throw new System.ArgumentException("Incorrect verified rut's number","rut");
+            }
             return BackendContext.Personas
-                .Where(p => p.Rut.Equals(rut)).Single();
+                .Where(p => p.Rut.Equals(rut)).SingleOrDefault();
         }
 
         public List < Autor > FindAutoresByRut(string rut) {
@@ -154,19 +163,21 @@ namespace Publicaciones.Service {
             Logger.LogDebug("Realizando Inicializacion .."); 
             // Persona por defecto
             Persona persona = new Persona(); 
-            persona.Rut = "123456789";
+            persona.Rut = "1-9";
             persona.Nombre = "Diego"; 
             persona.Apellido = "Urrutia"; 
-            string rut = "1";
-            persona.Rut = rut;
 
             // Agrego la persona al backend
             this.Add(persona); 
 
+            
+
+            /*
+
 
             // *** Borrar, es solo una prueba
             // ****
-            Persona pp = FindPersonasByRut(persona.Rut);
+            Persona pp = FindPersonaByRut(persona.Rut);
             Logger.LogWarning("Este es el apellido de Diego: " + pp.Apellido );
 
             Revista r = new Revista();
@@ -230,7 +241,8 @@ namespace Publicaciones.Service {
             //Logger.LogWarning("Esta es la pagina de inicio de una publicacion de Diego: " + lp.ElementAt(0).PagInicio);
             // ****
             // ***
-
+            */
+            
 
             foreach (Persona p in BackendContext.Personas) {
                 Logger.LogDebug("Persona: {0}", p); 
