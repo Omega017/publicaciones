@@ -197,11 +197,14 @@ namespace Publicaciones.Service {
         }
 
         public List<Publicacion> Publicaciones (string rut) {
+            if(!ModelValidations.isValidRut(rut)) {
+                throw new System.ArgumentException("Incorrect verified rut's number","rut");
+            }
             List < Autor > autores = this.FindAutoresByRut(rut);
             List < Publicacion > publicacionesAutor = new List< Publicacion >();
-            foreach (Autor autor in autores)
-            {
-                publicacionesAutor.Add(autor.Publicacion);
+            foreach (Autor autor in autores) {
+                if(autor.Publicacion != null)
+                    publicacionesAutor.Add(autor.Publicacion);
             }
             return publicacionesAutor;
         }
