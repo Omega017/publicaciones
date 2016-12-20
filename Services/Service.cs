@@ -35,6 +35,30 @@ namespace Publicaciones.Service {
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="revista"></param>
+        void Add(Revista revista);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="impacto"></param>
+        void Add(Impacto impacto);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indice"></param>
+        void Add(Indice indice);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paper"></param>
+        void Add(Paper paper);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="publicacionId"></param>
         /// <param name="autor"></param>
         void AddAutorToPublicacion(string publicacionId, Autor autor);
@@ -151,6 +175,34 @@ namespace Publicaciones.Service {
         public void Add(Autor author){
             // Guardo la publicacion en el Backend
             BackendContext.Autores.Add(author);
+            // Guardar cambios
+            BackendContext.SaveChanges();
+        }
+
+        public void Add(Revista revista) {
+            // Guardo la revista en el Backend
+            BackendContext.Revistas.Add(revista);
+            // Guardar cambios
+            BackendContext.SaveChanges();
+        }
+
+        public void Add(Impacto impacto) {
+            // Guardo la Impacto en el Backend
+            BackendContext.Impactos.Add(impacto);
+            // Guardar cambios
+            BackendContext.SaveChanges();
+        }
+
+        public void Add(Paper paper) {
+            // Guardo la Paper en el Backend
+            BackendContext.Papers.Add(paper);
+            // Guardar cambios
+            BackendContext.SaveChanges();
+        }
+
+        public void Add(Indice indice) {
+            // Guardo la Indice en el Backend
+            BackendContext.Indices.Add(indice);
             // Guardar cambios
             BackendContext.SaveChanges();
         }
