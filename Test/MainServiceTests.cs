@@ -281,11 +281,85 @@ namespace Publicaciones.Service {
             Assert.Equal(autorInverse.Publicacion.FechaWeb, publicBack1.FechaWeb);
 
             // Extensive atributes test
+
+            Autor autor5 = new Autor();
+            autor5.Persona = persona1;
+            autor5.TipoAutor = TipoAutor.Correspondiente;
+            Service.Add(autor5);
+
+            Autor autor6 = new Autor();
+            autor6.Persona = persona3;
+            autor6.TipoAutor = TipoAutor.Correspondiente;
+            Service.Add(autor6);
+
+            Indice indice5 = new Indice();
+            indice5.Nombre = "Scolopolulus";
+            Service.Add(indice5);
+
+            Impacto impacto5 = new Impacto();
+            impacto5.Fecha = new DateTime(1990, 12, 12);
+            impacto5.Indice = indice5;
+            impacto5.Jif = "12341";
+            impacto5.Q = Q.Q2;
+            Service.Add(impacto5);
+
             Revista revista5 = new Revista();
             revista5.Nombre = "Lo que callamos los hombres";
             revista5.Issn = "12";
+            revista5.Impactos = new List < Impacto >();
+            revista5.Impactos.Add(impacto5);
             Service.Add(revista5);
 
+            Paper paper4 = new Paper();
+            paper4.Abstract = "This is an Abstrac abstracto";
+            paper4.AreaDesarrollo = "NN";
+            paper4.FechaInicio = new DateTime(2015, 10, 10);
+            paper4.FechaTermino = new DateTime(2015, 11, 11);
+            paper4.LineaInvestigativa = "Las ideas de la vida";
+            paper4.Titulo = "Las aberraciones de ici";
+            Service.Add(paper4);
+
+            Paper paper5 = new Paper();
+            paper5.Abstract = "This is an Abstrac abstracto";
+            paper5.AreaDesarrollo = "NN";
+            paper5.FechaInicio = new DateTime(2016, 10, 10);
+            paper5.FechaTermino = new DateTime(2016, 11, 11);
+            paper5.LineaInvestigativa = "Las ideas de la vida";
+            paper5.Titulo = "Las aberraciones de ici";
+            Service.Add(paper5);
+
+            Publicacion publicacion5 = new Publicacion();
+            publicacion5.FechaRevista = new DateTime(2016, 12, 12);
+            publicacion2.FechaWeb = new DateTime(2016,12,12);
+            publicacion5.PagInicio = 12;
+            publicacion5.Revista = revista5;
+            publicacion5.Papers = new List < Paper >();
+            publicacion5.Papers.Add(paper4);
+            publicacion5.Papers.Add(paper5);
+            publicacion5.Autors = new List < Autor >();
+            publicacion5.Autors.Add(autor5);
+            publicacion5.Autors.Add(autor6);
+            Service.Add(publicacion5);
+
+            Publicacion publicBack5 = Service.Publicaciones("1-9").Last();
+
+            // Papers verification
+            Assert.True(publicBack5.Papers.Count() == 2);
+            Assert.True(publicBack5.Papers.First().PaperId == paper4.PaperId);
+            Assert.True(publicBack5.Papers.Last().PaperId == paper5.PaperId);
+
+            // Autors verification
+            Assert.True(publicBack5.Autors.First().AutorId == autor5.AutorId);
+            Assert.True(publicBack5.Autors.Last().AutorId == autor6.AutorId);
+
+            // Revista verification
+            Assert.True(publicBack5.Revista.RevistaId == revista5.RevistaId);
+
+            // Impacto verification
+            Assert.True(publicBack5.Revista.Impactos.First().ImpactoId == impacto5.ImpactoId);
+
+            // Indice verification
+            Assert.True(publicBack5.Revista.Impactos.First().Indice.IndiceId == indice5.IndiceId);     
 
 
             Logger.LogInformation("Testing IMainService.Publicaciones(string rut); OK");
