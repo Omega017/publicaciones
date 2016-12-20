@@ -280,7 +280,12 @@ namespace Publicaciones.Service {
             Assert.Equal(autorInverse.Publicacion.FechaRevista, publicBack1.FechaRevista);
             Assert.Equal(autorInverse.Publicacion.FechaWeb, publicBack1.FechaWeb);
 
-            // Extensive tributes test
+            // Extensive atributes test
+            Revista revista5 = new Revista();
+            revista5.Nombre = "Lo que callamos los hombres";
+            revista5.Issn = "12";
+            Service.Add(revista5);
+
 
 
             Logger.LogInformation("Testing IMainService.Publicaciones(string rut); OK");
