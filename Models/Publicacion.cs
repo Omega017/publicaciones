@@ -27,7 +27,7 @@ namespace Publicaciones.Models
         /// <summary>
         /// The list of the present authors of the publication 
         /// </summary>
-        public virtual List < Autor > Autor { get; set; }
+        public virtual List < Autor > Autors { get; set; }
 
         /// <summary>
         /// The date when the publication appeared in the DataBase of the WebSite
