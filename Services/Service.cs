@@ -35,6 +35,13 @@ namespace Publicaciones.Service {
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="publicacionId"></param>
+        /// <param name="autor"></param>
+        void AddAutorToPublicacion(string publicacionId, Autor autor);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="nombre"></param>
         /// <returns></returns>
         List < Persona > FindPersonas(string nombre);
@@ -45,6 +52,13 @@ namespace Publicaciones.Service {
         /// <param name="rut"></param>
         /// <returns></returns>
         Persona FindPersonaByRut(string rut);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rut"></param>
+        /// <returns></returns>
+        List < Autor > FindAutoresByRut(string rut);
 
         /// <summary>
         /// 
@@ -141,6 +155,13 @@ namespace Publicaciones.Service {
             BackendContext.SaveChanges();
         }
 
+        public void AddAutorToPublicacion(string publicacionId, Autor autor){
+            BackendContext.Publicaciones
+                .Where(p => p.PublicacionId == publicacionId)
+                .First().Autors.Add(autor);
+            BackendContext.SaveChanges();
+        }
+
         public List < Persona > FindPersonas(string nombre) {
             return BackendContext.Personas
                 .Where(p => p.Nombre.Contains(nombre))
@@ -163,6 +184,8 @@ namespace Publicaciones.Service {
 
         public List < Autor > FindAutoresByRut(string rut) {
             return BackendContext.Autores
+                .Include(a => a.Publicacion)
+                .Include(a => a.Persona)
                 .Where(a => a.Rut.Contains(rut))
                 .OrderBy(a => a.Persona.Nombre)
                 .ToList();
@@ -174,9 +197,7 @@ namespace Publicaciones.Service {
         }
 
         public List<Publicacion> Publicaciones (string rut) {
-            List < Autor > autores = BackendContext.Autores
-                .Where(a => a.Rut.Contains(rut))
-                .ToList();
+            List < Autor > autores = this.FindAutoresByRut(rut);
             List < Publicacion > publicacionesAutor = new List< Publicacion >();
             foreach (Autor autor in autores)
             {
