@@ -280,7 +280,7 @@ namespace Publicaciones.Service {
             Assert.Equal(autorInverse.Publicacion.FechaRevista, publicBack1.FechaRevista);
             Assert.Equal(autorInverse.Publicacion.FechaWeb, publicBack1.FechaWeb);
 
-            // Extensive test
+            // Extensive tributes test
 
 
             Logger.LogInformation("Testing IMainService.Publicaciones(string rut); OK");
