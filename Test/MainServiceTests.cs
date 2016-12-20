@@ -191,6 +191,101 @@ namespace Publicaciones.Service {
             
         }
 
+        [Fact]
+        public void PublicacionesTest(){
+            Logger.LogInformation("Testing IMainService.Publicaciones(string rut); ..");
+
+            // Non-Existence validation
+            Assert.True(Service.Publicaciones("1-9").Count == 0);
+
+            // Invalid parameter validation
+            Assert.Throws<System.ArgumentException>( () => { Service.Publicaciones("11222333-1"); });   
+
+            // Persona Creation
+            Persona persona1 = new Persona();
+            persona1.Nombre = "Pancho";
+            persona1.Apellido = "Villa";
+            persona1.Email = "jlabra@gmail.com";
+            persona1.Rut = "1-9";
+            Service.Add(persona1);
+
+            // Autor Creation
+            Autor autor1 = new Autor();
+            autor1.Persona = persona1;
+            autor1.TipoAutor = TipoAutor.Principal;
+            Service.Add(autor1);
+
+            // New autor creation
+            Autor autor2 = new Autor();
+            autor2.Persona = persona1;
+            autor2.TipoAutor = TipoAutor.Correspondiente;
+            Service.Add(autor2);
+
+            // Publicacion Creation
+            Publicacion publicacion1 = new Publicacion();
+            publicacion1.Autors = new List < Autor >();
+            publicacion1.Autors.Add(autor1);
+            publicacion1.FechaRevista = new DateTime(2015, 12, 11);
+            publicacion1.FechaWeb = new DateTime(2016,12 ,12);
+            publicacion1.PagInicio = 12;
+            Service.Add(publicacion1);
+
+            // Quantity Validation (null validation (Autor 2 without Publicacion))
+            Assert.True(Service.Publicaciones("1-9").Count() == 1);
+
+            // New Persona Creation
+            Persona persona3 = new Persona();
+            persona3.Nombre = "Lucho";
+            persona3.Apellido = "Jara";
+            persona3.Email = "ljara@gmail.com";
+            persona3.Rut = "2-7";
+            Service.Add(persona3);
+
+            // New autor creation
+            Autor autor3 = new Autor();
+            autor3.Persona = persona3;
+            autor3.TipoAutor = TipoAutor.Correspondiente;
+            Service.Add(autor3);
+
+            // Publicacion Creation
+            Publicacion publicacion2 = new Publicacion();
+            publicacion2.Autors = new List < Autor >();
+            publicacion2.Autors.Add(autor2);
+            publicacion2.Autors.Add(autor3);
+            publicacion2.FechaRevista = new DateTime(2010, 12, 11);
+            publicacion2.FechaWeb = new DateTime(2011,12 ,12);
+            publicacion2.PagInicio = 10;
+            Service.Add(publicacion2);
+
+            // Quntity validation
+            Assert.True(Service.Publicaciones("1-9").Count() == 2);
+            Assert.True(Service.Publicaciones("2-7").Count() == 1);
+
+            // Same Publicacion validation
+            Publicacion publicBack1 = Service.Publicaciones("1-9").ElementAt(1);
+            Publicacion publicBack2 = Service.Publicaciones("1-9").ElementAt(0);
+
+            Assert.Equal(publicBack1.FechaRevista, publicacion2.FechaRevista);
+            Assert.Equal(publicBack1.FechaWeb, publicacion2.FechaWeb);
+            Assert.Equal(publicBack1.PagInicio, publicacion2.PagInicio);
+
+            Assert.Equal(publicBack2.FechaRevista, publicacion1.FechaRevista);
+            Assert.Equal(publicBack2.FechaWeb, publicacion1.FechaWeb);
+            Assert.Equal(publicBack2.PagInicio, publicacion1.PagInicio);
+
+            // Inverse navigation test
+            Autor autorInverse =  Service.FindAutoresByRut("2-7").First();
+            Assert.Equal(autorInverse.PublicacionId, publicBack1.PublicacionId);
+            Assert.Equal(autorInverse.Publicacion.PagInicio, publicBack1.PagInicio);
+            Assert.Equal(autorInverse.Publicacion.FechaRevista, publicBack1.FechaRevista);
+            Assert.Equal(autorInverse.Publicacion.FechaWeb, publicBack1.FechaWeb);
+
+            // Extensive test
+
+
+            Logger.LogInformation("Testing IMainService.Publicaciones(string rut); OK");
+        }
+
         
 
         /*
