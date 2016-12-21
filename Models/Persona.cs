@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Publicaciones.Models
 {
@@ -24,6 +25,10 @@ namespace Publicaciones.Models
         /// The second name of the person
         /// </summary>
         public string Apellido { get; set; }
+
+        public virtual List < Grado > Grados { get; set; }
+
+        public virtual List < Afiliacion > Afiliaciones { get; set; }
     
     }
 }

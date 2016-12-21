@@ -28,9 +28,16 @@ namespace Publicaciones.Models
         public string PublicacionId { get; set; }
 
         /// <summary>
-        /// Publicacion is the navigation attribute from publication
+        /// Publicacion is the navigation attribute from publicacion
         /// </summary>
         public virtual Publicacion Publicacion { get; set; }
+
+        public string GradoId { get; set; }
+        public virtual Grado Grado { get; set; }
+
+        public string AfiliacionId { get; set; }
+        public virtual Afiliacion Afiliacion { get; set; }
+
     }
     /// <summary>
     /// TipoAutor is an enumeration that use this attribute
