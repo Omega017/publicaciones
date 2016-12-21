@@ -365,19 +365,6 @@ namespace Publicaciones.Service {
             Logger.LogInformation("Testing IMainService.Publicaciones(string rut); OK");
         }
 
-        
-
-        /*
-        [Theory,InlineData("1")]
-        public void TestPublicacionesAutor(string rut){
-            Logger.LogInformation("Iniciando TestPublicacionesAutor...");
-            Service.Initialize();
-            List <Publicacion> publicacionesPorAutor = Service.Publicaciones(rut);
-            Assert.NotNull(publicacionesPorAutor.First());
-            Logger.LogInformation("Testing Metodo Publicaciones: " + publicacionesPorAutor.First().PublicacionId);
-        }
-        */
-
         void IDisposable.Dispose()
         {
             // Aca eliminar el Service
